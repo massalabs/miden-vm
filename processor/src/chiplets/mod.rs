@@ -21,9 +21,9 @@ use memory::Memory;
 pub use memory::MemoryError;
 
 mod ace;
-use ace::AceHints;
 pub use ace::{
-    Ace, CircuitEvaluation, MAX_NUM_ACE_WIRES, PTR_OFFSET_ELEM, PTR_OFFSET_WORD, eval_circuit,
+    Ace, AceHints, CircuitEvaluation, MAX_NUM_ACE_WIRES, PTR_OFFSET_ELEM, PTR_OFFSET_WORD,
+    eval_circuit,
 };
 
 mod kernel_rom;
@@ -31,7 +31,7 @@ use kernel_rom::KernelRom;
 
 mod aux_trace;
 
-pub(crate) use aux_trace::AuxTraceBuilder;
+pub use aux_trace::AuxTraceBuilder;
 
 #[cfg(test)]
 mod tests;
