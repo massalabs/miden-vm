@@ -71,7 +71,7 @@ pub use host::{
 
 mod chiplets;
 use chiplets::Chiplets;
-pub use chiplets::{AceHints, AuxTraceBuilder, MemoryError};
+pub use chiplets::MemoryError;
 
 mod trace;
 use trace::TraceFragment;
