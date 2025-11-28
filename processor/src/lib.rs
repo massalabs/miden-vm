@@ -49,13 +49,13 @@ use system::System;
 #[cfg(test)]
 mod test_utils;
 
-pub(crate) mod decoder;
+pub mod decoder;
 use decoder::Decoder;
 
-mod stack;
+pub mod stack;
 use stack::Stack;
 
-mod range;
+pub mod range;
 use range::RangeChecker;
 
 mod host;
@@ -69,7 +69,7 @@ pub use host::{
     handlers::{DebugHandler, EventError, EventHandler, EventHandlerRegistry, NoopEventHandler},
 };
 
-mod chiplets;
+pub mod chiplets;
 use chiplets::Chiplets;
 pub use chiplets::MemoryError;
 

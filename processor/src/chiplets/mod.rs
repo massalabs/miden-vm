@@ -31,7 +31,7 @@ use kernel_rom::KernelRom;
 
 mod aux_trace;
 
-pub(crate) use aux_trace::AuxTraceBuilder;
+pub use aux_trace::AuxTraceBuilder;
 
 #[cfg(test)]
 mod tests;
