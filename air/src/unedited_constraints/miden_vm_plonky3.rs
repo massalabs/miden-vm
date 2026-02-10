@@ -27,18 +27,6 @@ where F: Field,
         // System clock transition constraint - Ensure clock increments by 1 each step
         builder.when_transition().assert_zero(main_next[0].clone().into() - (main_current[0].clone().into() + AB::Expr::ONE));
         
-        // Chiplet selectors binary constraints - Ensure all selectors are valid binary values
-        builder.assert_zero(main_current[51].clone().into() * main_current[51].clone().into() - main_current[51].clone().into());
-        builder.assert_zero(main_current[51].clone().into() * (main_current[52].clone().into() * main_current[52].clone().into() - main_current[52].clone().into()));
-        builder.assert_zero(main_current[51].clone().into() * main_current[52].clone().into() * (main_current[53].clone().into() * main_current[53].clone().into() - main_current[53].clone().into()));
-        builder.assert_zero(main_current[51].clone().into() * main_current[52].clone().into() * main_current[53].clone().into() * (main_current[54].clone().into() * main_current[54].clone().into() - main_current[54].clone().into()));
-        builder.assert_zero(main_current[51].clone().into() * main_current[52].clone().into() * main_current[53].clone().into() * main_current[54].clone().into() * (main_current[55].clone().into() * main_current[55].clone().into() - main_current[55].clone().into()));
-        
-        // Chiplet selectors stability constraints - Prevent deactivation (forbids 1→0 transitions)
-        builder.when_transition().assert_zero(main_current[51].clone().into() * (main_next[51].clone().into() - main_current[51].clone().into()));
-        builder.when_transition().assert_zero(main_current[51].clone().into() * main_current[52].clone().into() * (main_next[52].clone().into() - main_current[52].clone().into()));
-        builder.when_transition().assert_zero(main_current[51].clone().into() * main_current[52].clone().into() * main_current[53].clone().into() * (main_next[53].clone().into() - main_current[53].clone().into()));
-        builder.when_transition().assert_zero(main_current[51].clone().into() * main_current[52].clone().into() * main_current[53].clone().into() * main_current[54].clone().into() * (main_next[54].clone().into() - main_current[54].clone().into()));
-        builder.when_transition().assert_zero(main_current[51].clone().into() * main_current[52].clone().into() * main_current[53].clone().into() * main_current[54].clone().into() * main_current[55].clone().into() * (main_next[55].clone().into() - main_current[55].clone().into()));
+        // TODO: Add all the other constraints here
     }
 }

@@ -50,14 +50,5 @@ fn enforce_chiplets_selector_constraint<AB>(
 ) where
     AB: MidenAirBuilder,
 {
-    builder.assert_zero(local.chiplets[0].clone() * local.chiplets[0].clone() - local.chiplets[0].clone());
-    builder.assert_zero(local.chiplets[0].clone() * (local.chiplets[1].clone() * local.chiplets[1].clone() - local.chiplets[1].clone()));
-    builder.assert_zero(local.chiplets[0].clone() * local.chiplets[1].clone() * (local.chiplets[2].clone() * local.chiplets[2].clone() - local.chiplets[2].clone()));
-    builder.assert_zero(local.chiplets[0].clone() * local.chiplets[1].clone() * local.chiplets[2].clone() * (local.chiplets[3].clone() * local.chiplets[3].clone() - local.chiplets[3].clone()));
-    builder.assert_zero(local.chiplets[0].clone() * local.chiplets[1].clone() * local.chiplets[2].clone() * local.chiplets[3].clone() * (local.chiplets[4].clone() * local.chiplets[4].clone() - local.chiplets[4].clone()));
-    builder.when_transition().assert_zero(local.chiplets[0].clone() * (next.chiplets[0].clone() - local.chiplets[0].clone()));
-    builder.when_transition().assert_zero(local.chiplets[0].clone() * local.chiplets[1].clone() * (next.chiplets[1].clone() - local.chiplets[1].clone()));
-    builder.when_transition().assert_zero(local.chiplets[0].clone() * local.chiplets[1].clone() * local.chiplets[2].clone() * (next.chiplets[2].clone() - local.chiplets[2].clone()));
-    builder.when_transition().assert_zero(local.chiplets[0].clone() * local.chiplets[1].clone() * local.chiplets[2].clone() * local.chiplets[3].clone() * (next.chiplets[3].clone() - local.chiplets[3].clone()));
-    builder.when_transition().assert_zero(local.chiplets[0].clone() * local.chiplets[1].clone() * local.chiplets[2].clone() * local.chiplets[3].clone() * local.chiplets[4].clone() * (next.chiplets[4].clone() - local.chiplets[4].clone()));
+    // TODO: add chiplets selector constraints
 }

@@ -36,7 +36,9 @@ where
     AB: MidenAirBuilder,
 {
     builder.when_first_row().assert_zero(local.range[1].clone().into());
-    builder.when_last_row().assert_zero(local.range[1].clone().into() - AB::Expr::from_u64(65535));
+    builder
+        .when_last_row()
+        .assert_zero(local.range[1].clone().into() - AB::Expr::from_u64(65535));
 }
 
 /// Enforces the transition constraint for the range checker V column.
@@ -53,5 +55,29 @@ fn enforce_range_transition_constraint<AB>(
 ) where
     AB: MidenAirBuilder,
 {
-    builder.when_transition().assert_zero((next.range[1].clone().into() - local.range[1].clone().into()) * (next.range[1].clone().into() - local.range[1].clone().into() - AB::Expr::ONE) * (next.range[1].clone().into() - local.range[1].clone().into() - AB::Expr::from_u64(3)) * (next.range[1].clone().into() - local.range[1].clone().into() - AB::Expr::from_u64(9)) * (next.range[1].clone().into() - local.range[1].clone().into() - AB::Expr::from_u64(27)) * (next.range[1].clone().into() - local.range[1].clone().into() - AB::Expr::from_u64(81)) * (next.range[1].clone().into() - local.range[1].clone().into() - AB::Expr::from_u64(243)) * (next.range[1].clone().into() - local.range[1].clone().into() - AB::Expr::from_u64(729)) * (next.range[1].clone().into() - local.range[1].clone().into() - AB::Expr::from_u64(2187)));
+    builder.when_transition().assert_zero(
+        (next.range[1].clone().into() - local.range[1].clone().into())
+            * (next.range[1].clone().into() - local.range[1].clone().into() - AB::Expr::ONE)
+            * (next.range[1].clone().into()
+                - local.range[1].clone().into()
+                - AB::Expr::from_u64(3))
+            * (next.range[1].clone().into()
+                - local.range[1].clone().into()
+                - AB::Expr::from_u64(9))
+            * (next.range[1].clone().into()
+                - local.range[1].clone().into()
+                - AB::Expr::from_u64(27))
+            * (next.range[1].clone().into()
+                - local.range[1].clone().into()
+                - AB::Expr::from_u64(81))
+            * (next.range[1].clone().into()
+                - local.range[1].clone().into()
+                - AB::Expr::from_u64(243))
+            * (next.range[1].clone().into()
+                - local.range[1].clone().into()
+                - AB::Expr::from_u64(729))
+            * (next.range[1].clone().into()
+                - local.range[1].clone().into()
+                - AB::Expr::from_u64(2187)),
+    );
 }

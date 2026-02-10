@@ -13,8 +13,7 @@
 
 use core::borrow::Borrow;
 
-use miden_core::field::PrimeCharacteristicRing;
-use miden_core::utils::Matrix;
+use miden_core::{field::PrimeCharacteristicRing, utils::Matrix};
 use miden_crypto::stark::air::MidenAirBuilder;
 
 use crate::{MainTraceRow, NUM_PERIODIC_VALUES};
@@ -87,26 +86,48 @@ where
     let periodic_values: [_; NUM_PERIODIC_VALUES] =
         builder.periodic_evals().try_into().expect("Wrong number of periodic values");
 
-    // FIXME: move these constants to a more appropriate place, and ensure they are consistent across all constraints modules
+    // FIXME: move these constants to a more appropriate place, and ensure they are consistent
+    // across all constraints modules
     const MAX_BETA_CHALLENGE_POWER: usize = 15;
     const AUX_WIDTH: usize = 8;
 
-    let (&alpha, beta_challenges) = builder.permutation_randomness().split_first().expect("Wrong number of randomness");
-    let beta_challenges: [_; MAX_BETA_CHALLENGE_POWER] = beta_challenges.try_into().expect("Wrong number of randomness");
-    let aux_bus_boundary_values: [_; AUX_WIDTH] = builder.aux_bus_boundary_values().try_into().expect("Wrong number of aux bus boundary values");
+    let (&alpha, beta_challenges) = builder
+        .permutation_randomness()
+        .split_first()
+        .expect("Wrong number of randomness");
+    let beta_challenges: [_; MAX_BETA_CHALLENGE_POWER] =
+        beta_challenges.try_into().expect("Wrong number of randomness");
+    let aux_bus_boundary_values: [_; AUX_WIDTH] = builder
+        .aux_bus_boundary_values()
+        .try_into()
+        .expect("Wrong number of aux bus boundary values");
     let aux = builder.permutation();
-    let (aux_current, aux_next) = (
-        aux.row_slice(0).unwrap(),
-        aux.row_slice(1).unwrap(),
-    );
+    let (aux_current, aux_next) = (aux.row_slice(0).unwrap(), aux.row_slice(1).unwrap());
 
     // STACK BUS CONSTRAINTS
     #[cfg(feature = "stack_constraints")]
-    stack::bus::enforce_stack_bus_constraints(builder, alpha, &beta_challenges, &aux_current, &aux_next, local, next, &periodic_values);
+    stack::bus::enforce_stack_bus_constraints(
+        builder,
+        alpha,
+        &beta_challenges,
+        &aux_current,
+        &aux_next,
+        local,
+        next,
+        &periodic_values,
+    );
 
     // DECODER BUS CONSTRAINTS
     #[cfg(feature = "decoder_constraints")]
-    decoder::bus::enforce_decoder_bus_constraints(builder, alpha, &beta_challenges, &aux_current, &aux_next, local, next);
+    decoder::bus::enforce_decoder_bus_constraints(
+        builder,
+        alpha,
+        &beta_challenges,
+        &aux_current,
+        &aux_next,
+        local,
+        next,
+    );
 
     // RANGE CHECKER BUS CONSTRAINTS
     #[cfg(feature = "range_constraints")]
@@ -114,5 +135,14 @@ where
 
     // CHIPLETS BUS CONSTRAINTS
     #[cfg(feature = "chiplets_constraints")]
-    chiplets::bus::enforce_chiplets_bus_constraints(builder, alpha, &beta_challenges, &aux_current, &aux_next, local, next, &periodic_values);
+    chiplets::bus::enforce_chiplets_bus_constraints(
+        builder,
+        alpha,
+        &beta_challenges,
+        &aux_current,
+        &aux_next,
+        local,
+        next,
+        &periodic_values,
+    );
 }
